@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Chat</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#202225;
+    color:white;
+    font-family:'Inter',Arial,sans-serif;
+}
+
+
+.container{
+    width:400px;
+    max-width:95%;
+    margin:50px auto;
+    background:#2f3136;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+
+.title{
+    background:#36393f;
+    padding:18px;
+    text-align:center;
+    font-size:24px;
+    font-weight:600;
+}
+
+
+.login{
+    padding:20px;
+}
+
+
+input{
+    width:100%;
+    padding:12px;
+    margin-bottom:12px;
+    background:#202225;
+    border:1px solid #444;
+    border-radius:6px;
+    color:white;
+    outline:none;
+}
+
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:6px;
+    background:#5865f2;
+    color:white;
+    cursor:pointer;
+    font-weight:600;
+}
+
+
+.chat{
+    display:none;
+}
+
+
+.info{
+    padding:15px;
+    background:#36393f;
+    font-size:14px;
+}
+
+
+.messages{
+    height:350px;
+    overflow:auto;
+    padding:15px;
+}
+
+
+.message{
+    background:#36393f;
+    padding:10px;
+    margin-bottom:8px;
+    border-radius:6px;
+}
+
+
+.send{
+    display:flex;
+    gap:8px;
+    padding:12px;
+}
+
+
+.send input{
+    margin:0;
+}
+
+
+.send button{
+    width:90px;
+}
+
+
+.voice{
+    background:#43b581;
+    margin:12px;
+    width:calc(100% - 24px);
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="title">
+Chat
+</div>
+
+
+<div class="login" id="login">
+
+<input id="username" placeholder="Username">
+
+<input id="server" placeholder="Server Link">
+
+
+<button onclick="join()">
+Join
+</button>
+
+</div>
+
+
+
+<div class="chat" id="chat">
+
+
+<div class="info" id="info">
+
+</div>
+
+
+<div class="messages" id="messages">
+
+</div>
+
+
+<div class="send">
+
+<input id="text" placeholder="Message">
+
+<button onclick="send()">
+Send
+</button>
+
+</div>
+
+
+<button class="voice" onclick="voice()">
+🎙 Voice
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+let username="";
+
+
+function join(){
+
+username=document.getElementById("username").value;
+
+let server=document.getElementById("server").value;
+
+
+if(username===""){
+alert("Enter Username");
+return;
+}
+
+
+if(server===""){
+alert("Enter Server Link");
+return;
+}
+
+
+
+document.getElementById("login").style.display="none";
+
+document.getElementById("chat").style.display="block";
+
+
+document.getElementById("info").innerHTML=
+"User: "+username+"<br>Server: "+server;
+
+}
+
+
+
+function send(){
+
+let box=document.getElementById("text");
+
+let msg=box.value.trim();
+
+
+if(msg==="") return;
+
+
+
+document.getElementById("messages").innerHTML +=
+`
+<div class="message">
+<b>${username}</b><br>
+${msg}
+</div>
+`;
+
+
+box.value="";
+
+}
+
+
+
+function voice(){
+
+navigator.mediaDevices.getUserMedia({
+audio:true
+})
+
+.then(()=>{
+
+alert("Voice enabled");
+
+})
+
+.catch(()=>{
+
+alert("Microphone permission denied");
+
+});
+
+}
+
+
+</script>
+
+
+</body>
+</html>
